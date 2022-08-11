@@ -1,11 +1,10 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from rest_framework import viewsets
 
 from .models import Car
+from .serializers import CarSerializer
 
 
-def index(request):
-    title = "Cars listing"
-    cars_list = Car.objects.all()
-    context = {"title": title, "cars_list": cars_list}
-    return render(request, "listing/index.html", context)
+class CarViewSet(viewsets.ModelViewSet):
+
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer

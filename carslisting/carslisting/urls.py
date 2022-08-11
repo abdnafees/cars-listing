@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
 
 from listing import views
 
-urlpatterns = [
-    path("listing/", include("listing.urls")),
-    path("admin/", admin.site.urls),
-]
+router = routers.DefaultRouter()
+router.register(r"cars", views.CarViewSet)
+
+
+urlpatterns = [path("", include(router.urls))]
