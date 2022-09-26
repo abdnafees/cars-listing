@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Car(models.Model):
     name = models.CharField(max_length=200)
     mpg = models.FloatField()
@@ -11,6 +13,3 @@ class Car(models.Model):
     acceleration = models.FloatField()
     model = models.IntegerField()
     origin = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
