@@ -1,13 +1,12 @@
 import csv
 import os
 
+from api.models import Car
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from api.models import Car
-
-
-file_path = os.path.abspath(os.path.abspath(settings.BASE_DIR) + "/data/cars.csv")
+file_path = os.path.abspath(os.path.abspath(
+    settings.BASE_DIR) + "/data/cars.csv")
 
 
 class Command(BaseCommand):
@@ -19,11 +18,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         try:
             with open(file_path) as csv_file:
-                csv_reader = csv.DictReader(csv_file)
+                csv_reader = csv.DictReader(
+                    csv_file, delimiter=';')
                 objects_list = []
                 for row in csv_reader:
                     try:
-                        print("here")
                         objects_list.append(
                             Car(
                                 name=row["Car"],
@@ -42,11 +41,13 @@ class Command(BaseCommand):
 
                 try:
                     Car.objects.bulk_create(objects_list)
-                    self.stdout.write(self.style.SUCCESS("Car has been created."))
+                    self.stdout.write(self.style.SUCCESS(
+                        "Car has been created."))
 
                 except Exception as e:
                     self.stdout.write(
-                        self.style.ERROR(f"Car object could not be created {e}")
+                        self.style.ERROR(
+                            f"Car object could not be created {e}")
                     )
 
         except Exception as e:
